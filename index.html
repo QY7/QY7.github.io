@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang>
+<html class="theme-next mist use-motion" lang>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -93,7 +93,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -324,9 +324,9 @@
           
             <h1 id="如何驱动MIPI-DSI-1"><a href="#如何驱动MIPI-DSI-1" class="headerlink" title="如何驱动MIPI DSI -1"></a>如何驱动MIPI DSI -1</h1><h2 id="MIPI-DSI协议简介"><a href="#MIPI-DSI协议简介" class="headerlink" title="MIPI DSI协议简介"></a>MIPI DSI协议简介</h2><p><strong>MIPI</strong>（Mobile Industry Processor Interface）是一个提供<strong>高速、低功耗</strong>的<strong>串行通讯协议</strong>。其定义了摄像头、显示器以及芯片到芯片的通讯连接（分别需要支持C-PHY、D-PHY或者M-PHY），现在广泛用于各种视频传输的方案中，比如手机显示屏啊、摄像头之类的，这里主要来说一下DSI的部分。</p>
 <p><strong>DSI</strong>（Display Serial Interface)，即用于显示的协议。其物理层的电路非常简单，如下图所示。主要就是clock以及lanes数据线均采用差分连接）。clock用于信号同步，lanes就是用于传输数据。</p>
-<p><img src="Untitled.png" alt="Untitled.png"></p>
+<p><img src="/.top//Untitled.png" alt="Untitled.png"></p>
 <p>根据使用场合对带宽的不同需求，可以自定义配置使用的lanes的数量。其速度可以参考下图</p>
-<p><img src="Untitled%201.png" alt="Untitled%201.png"></p>
+<p><img src="/.top//Untitled%201.png" alt="Untitled%201.png"></p>
 <p>比如4通道的DSI接口最高可以达到的带宽为10Gbps，平均每个lane速度为2.5Gbps。为了理解这个速度可以对比一下PCIE协议的带宽。PCIE3.0作为现在CPU连接GPU的主流总线，其总线的带宽已经是很能打的存在了，一个PCIE lane的带宽为8Gbps，也比MIPI的带宽高不了太多，所以MIPI速度可以说相当快了），扯远了扯远了。看完上面可能会觉得，好像用MIPI协议驱动显示屏幕没有想象的那么难，还是很简单的，比如试试FPGA呢？</p>
 <h2 id="FPGA驱动MIPI？有点难度"><a href="#FPGA驱动MIPI？有点难度" class="headerlink" title="FPGA驱动MIPI？有点难度"></a>FPGA驱动MIPI？有点难度</h2><p>比如说HDMI这种接口直接用FPGA来写还是比较简单的，网上都能找到代码，比如<a href="https://www.fpga4fun.com/HDMI.html" target="_blank" rel="noopener">这里</a>。那是不是MIPI也可以这么操作？</p>
 <p>找一个别人写好的MIPI的FPGA驱动代码，选一个合适的lanes数量，比如就4个lanes吧。然后连接4lanes需要的十根线（8个数据线、2个时钟线），然后在电路上连接HDMI接口，搞定。简直简单的不讲武德。真的这么简单吗？并不是🙄</p>
@@ -338,7 +338,7 @@
 <p>之所以要有一个专门的面向屏幕的接口是因为由于不同的显示面板的参数不同，需要根据驱动面板自身的参数调整类似于<strong>刷新时间、空白时间等。</strong>拿MIPI为例，为了配置这些参数信息，就需要用接口中的Lanes按照<strong>MIPI规定的传输帧格式来传输数据</strong> （需要按照特定的握手顺序以及指令规则传输控制和视频数据），而比较蛋疼的是，MIPI的接口协议并不公开，大厂内部应该都有，但是作为第三方的DIY玩家来说，这些东西就是很难拿到的（或许可以通过看示波器信号来逆向解析协议，这个太硬核了，本渣流下了太菜的泪水😭）。</p>
 <p>因此想要直接用FPGA来驱动的话难度很大，代码并不像<a href="https://www.notion.so/HDMI-c7ce414b2b194c39a0bd8a3d563c1f04" target="_blank" rel="noopener">HDMI代码</a>这么简单🤔。那有没有什么桥梁，能够间接驱动显示屏幕呢？还真有</p>
 <h2 id="基于ASIC芯片的方案"><a href="#基于ASIC芯片的方案" class="headerlink" title="基于ASIC芯片的方案"></a>基于ASIC芯片的方案</h2><p>既然MIPI闭源了没法写FPGA程序，能否用已经成熟的ASCI来帮我们完成这部分功能？还真有，比如东芝的<strong>TC358x</strong>系列、TI的<strong>DSI8x</strong>系列、还有稚辉君提到的龙讯的LT6911方案等都是。这些方案相当于提供了一个API接口，提供了可以<strong>连接闭源的MIP的一个开源接口的桥梁</strong>。以TC358870为例，左侧为HDMI的输入（这部分直接接到显示源上就可以了，不需要进行专门的程序编写），右侧是2x4lanes的MIPI输出以及屏幕的配置I2C接口部分以及音频部分。</p>
-<p><img src="Untitled%202.png" alt="Untitled%202.png"></p>
+<p><img src="/.top//Untitled%202.png" alt="Untitled%202.png"></p>
 <p>通过I2C的接口配置传入屏幕的参数配置信息。所以如果这个芯片要适配不同的屏幕，就需要通过MCU给这个芯片发送对应的屏幕信息。这个方案就看起来可行得多😂。</p>
 <h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
 <li><a href="https://www.cnblogs.com/B1ue/p/10334900.html" target="_blank" rel="noopener">RPi 树莓派 DSI 接口研究 MIPI raspberry pi</a></li>
@@ -491,7 +491,7 @@
           
             <h1 id="宏观来看CPU如何与设备通讯"><a href="#宏观来看CPU如何与设备通讯" class="headerlink" title="宏观来看CPU如何与设备通讯"></a>宏观来看CPU如何与设备通讯</h1><p>一台电脑的主要部分就是CPU、GPU、内存、硬盘、以及各种外围设备（包括USB、以太网、无线网、声卡等），其实我从很早开始就很好奇这些东西都是怎么个连接法，仅仅是学了一点点计算机组成还不足以解释心里的困惑🤣。所以才有这篇文章的折腾。</p>
 <p>以Intel的<strong>i7-6700K</strong>这个CPU的框架为例，其框图如下。</p>
-<p><img src="Untitled.png" alt></p>
+<p><img src="/.top//Untitled.png" alt></p>
 <ul>
 <li>左上角，CPU是通过PCIE（Peripheral Component Interconnect Express)接口连接GPU。</li>
 <li>左下角，连接到3个独立的显示控制上</li>
@@ -499,11 +499,11 @@
 <li>下侧，CPU通过DMI3.0总线连接南桥，并扩展连接到一系列的外围设备上。</li>
 </ul>
 <h2 id="1、PCIE总线"><a href="#1、PCIE总线" class="headerlink" title="1、PCIE总线"></a>1、PCIE总线</h2><h3 id="PCIE总线带宽"><a href="#PCIE总线带宽" class="headerlink" title="PCIE总线带宽"></a>PCIE总线带宽</h3><p>CPU需要直接连接的就是显卡和内存，因为这两者都是需要非常高的带宽来传输大量的数据。显卡走的就是16通道的<a href="https://www.notion.so/PCIE-7a85671f91654ba1966c253463eee9a4" target="_blank" rel="noopener">PCIE总线</a> ，拿现在最主流的<strong>PCIE3.0</strong>总线而言，其速度为8Gbps<em>16（也就是1GBps</em>16），所以总线一共的带宽为128Gbps。</p>
-<p><img src="Untitled%201.png" alt></p>
+<p><img src="/.top//Untitled%201.png" alt></p>
 <h3 id="PCIE总线拆分"><a href="#PCIE总线拆分" class="headerlink" title="PCIE总线拆分"></a>PCIE总线拆分</h3><p>但是看到图中CPU左侧连接的可以是<strong>1*16lanes</strong>，也可以是<strong>2*8lanes</strong>，还可以是<strong>1*8</strong> and <strong>2*4</strong>，这就是我们常说的<strong>16</strong>或者<strong>8+8</strong>以及<strong>8+4+4</strong>。不同的CPU不一样，一般来说Intel的<strong>直连CPU的PCIE</strong>只有16个通道，可以支持<strong>8+8</strong>或者<strong>8+4+4</strong>甚至<strong>8+4+2+2</strong>，这就要看CPU的型号支持了。</p>
 <p>那为啥会有把PCIE的16个通道拆分的需求呢？我猜测应该就是因为有的显卡性能没那么牛逼，不需要那么高的带宽来传输数据。比如GPU的处理数据的能力只有50Gbps，那么给他8个通道的PCIE3.0通道GPU的路子还是很宽敞。</p>
 <p>所以多余的通道可以拿来干点别的事情啊，比如接两个显卡它不香吗，或者多接一个M2的SSD硬盘也不错啊，总不能闲着浪费这个CPU的资源啊，所以就可以通过拆分PCIE通道来实现这个目的。这个就需要主板设计的帮助啦。比如主板上有两个PCIE3.0的插槽，两个都只用8个lanes，这样就可以同时插入两个显卡或者说插入一个显卡加一个SSD啦，听起来很不错的样子。虽然说高端显卡可能会受到这种情形的瓶颈限制，但是中低端显卡仍然可以“全力发挥”。而这种接口仍然是需要兼容16lanes的封装（虽然只有8个lanes的线是在用的）。</p>
-<p><img src="Untitled%202.png" alt></p>
+<p><img src="/.top//Untitled%202.png" alt></p>
 <p>以一个实际的主板举例哈。红色框出来的就是3个PCIE3.0<em>16的接口不过他们的带宽是不一样的，从上往下依次是x16，x8，x4。绿色的就是PCIE</em>1的插槽，显卡也是可以插在这里的，只不过性能就GG了。<strong>那么假如同时插最上面的两个PCIE*16卡槽，会发生什么？</strong></p>
 <p>由于PCIE的一共就16个通道，因此第一个插槽就会降速到x8，所以最后的结果也就是两个x8啦。所以也不是说一定双显卡交火速度就快，一个高端显卡带一个低端显卡，说不定慢的那个显卡直接把高端显卡带宽拉低到8GBps😂，人间惨剧。</p>
 <h2 id="2、内存"><a href="#2、内存" class="headerlink" title="2、内存"></a>2、内存</h2><p>说完CPU左边的事情，我们来说CPU右边。也就是主板的内存。</p>
@@ -516,17 +516,17 @@
 <li>DDR3 1866：14.9 G MB/s</li>
 </ul>
 <p>内存则通过内存管理单元与CPU进行通讯，而内存管理单元目前已经做到CPU内部了（以前是北桥来完成）。如下图所示，6700k支持两个内存通道连接，一个通道可以连接一个内存条（叫做<strong>1DPC, 1 DIMM Per Channel</strong>)，也可以连接两个内存条（<strong>2DPC，2 DIMM Per Channel</strong>)</p>
-<p><img src="Untitled%203.png" alt></p>
+<p><img src="/.top//Untitled%203.png" alt></p>
 <p>如下左图的红色框所示就是一个双通道四插槽的内存条接口。右侧则是一个四通道八插槽的主板</p>
-<p><img src="Untitled%204.png" alt></p>
+<p><img src="/.top//Untitled%204.png" alt></p>
 <p>两通道2DPC</p>
-<p><img src="Untitled%205.png" alt></p>
+<p><img src="/.top//Untitled%205.png" alt></p>
 <p>四通道2DPC</p>
 <h2 id="3、南桥-South-Bridge"><a href="#3、南桥-South-Bridge" class="headerlink" title="3、南桥(South Bridge)"></a>3、南桥(South Bridge)</h2><p>看过维修厮的视频看多了，肯定还是要来讲一讲三板斧中的淦南桥。下图中的Chipset就是南桥，与CPU连接就是通过DMI总线连接，DMI3.0的带宽基本相当于PCIE3.0的4 lanes的速度，也就是4GBps（32Gbps）。通过南桥，又会把这个带宽细分出新的PCIE接口、USB接口、网卡、声卡、SATA这些，也会与BIOS通过SPI通讯协议连接。</p>
-<p><img src="Untitled.png" alt></p>
+<p><img src="/.top//Untitled.png" alt></p>
 <p>由于这些外围设备对带宽的需求相对来说没有显卡和内存条那么高，所以通过DMI总线基本就能搞定这些数据啦。而南桥就相当于电脑除了CPU之外的第二个脑子，管理一大箩筐的外设设备。这样CPU也能专心搞自己的高速数据处理，不用隔三差五的被类似于USB这些小弟打扰。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>找了一张I7的Die的图</p>
-<p><img src="Untitled%206.png" alt></p>
+<p><img src="/.top//Untitled%206.png" alt></p>
 <p>最右侧的就是上面提到的连接PCIE接口的、连接DMI接口的部分。下面的就是内存处理单元，这两部分可以说就是CPU控制与外部连接的接口啦。所以如果仅仅从宏观上来看，CPU的原理是不是已经一目了然了呢！</p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
 <li><a href="https://www.cs.uaf.edu/2009/fall/cs441/proj1/russell/index.html" target="_blank" rel="noopener">北桥的消失</a></li>
@@ -694,7 +694,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
