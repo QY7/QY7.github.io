@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="Felix&#39;s Blog">
 <meta property="og:description" content="如何驱动MIPI DSI -1MIPI DSI协议简介MIPI（Mobile Industry Processor Interface）是一个提供高速、低功耗的串行通讯协议。其定义了摄像头、显示器以及芯片到芯片的通讯连接（分别需要支持C-PHY、D-PHY或者M-PHY），现在广泛用于各种视频传输的方案中，比如手机显示屏啊、摄像头之类的，这里主要来说一下DSI的部分。 DSI（Display Se">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://felixqi.top/.top//Untitled.png">
-<meta property="og:image" content="http://felixqi.top/.top//Untitled%201.png">
-<meta property="og:image" content="http://felixqi.top/.top//Untitled%202.png">
-<meta property="og:updated_time" content="2021-01-03T09:06:48.360Z">
+<meta property="og:image" content="http://felixqi.top/images/MIPI/Untitled.png">
+<meta property="og:image" content="http://felixqi.top/images/MIPI/Untitled%201.png">
+<meta property="og:image" content="http://felixqi.top/images/MIPI/Untitled%202.png">
+<meta property="og:updated_time" content="2021-01-08T03:00:01.552Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何驱动MIPI DSI -1">
 <meta name="twitter:description" content="如何驱动MIPI DSI -1MIPI DSI协议简介MIPI（Mobile Industry Processor Interface）是一个提供高速、低功耗的串行通讯协议。其定义了摄像头、显示器以及芯片到芯片的通讯连接（分别需要支持C-PHY、D-PHY或者M-PHY），现在广泛用于各种视频传输的方案中，比如手机显示屏啊、摄像头之类的，这里主要来说一下DSI的部分。 DSI（Display Se">
-<meta name="twitter:image" content="http://felixqi.top/.top//Untitled.png">
+<meta name="twitter:image" content="http://felixqi.top/images/MIPI/Untitled.png">
 
 
 
@@ -328,9 +328,9 @@
       
         <h1 id="如何驱动MIPI-DSI-1"><a href="#如何驱动MIPI-DSI-1" class="headerlink" title="如何驱动MIPI DSI -1"></a>如何驱动MIPI DSI -1</h1><h2 id="MIPI-DSI协议简介"><a href="#MIPI-DSI协议简介" class="headerlink" title="MIPI DSI协议简介"></a>MIPI DSI协议简介</h2><p><strong>MIPI</strong>（Mobile Industry Processor Interface）是一个提供<strong>高速、低功耗</strong>的<strong>串行通讯协议</strong>。其定义了摄像头、显示器以及芯片到芯片的通讯连接（分别需要支持C-PHY、D-PHY或者M-PHY），现在广泛用于各种视频传输的方案中，比如手机显示屏啊、摄像头之类的，这里主要来说一下DSI的部分。</p>
 <p><strong>DSI</strong>（Display Serial Interface)，即用于显示的协议。其物理层的电路非常简单，如下图所示。主要就是clock以及lanes数据线均采用差分连接）。clock用于信号同步，lanes就是用于传输数据。</p>
-<p><img src="/.top//Untitled.png" alt="Untitled.png"></p>
+<p><img src="/images/MIPI/Untitled.png" alt></p>
 <p>根据使用场合对带宽的不同需求，可以自定义配置使用的lanes的数量。其速度可以参考下图</p>
-<p><img src="/.top//Untitled%201.png" alt="Untitled%201.png"></p>
+<p><img src="/images/MIPI/Untitled%201.png" alt></p>
 <p>比如4通道的DSI接口最高可以达到的带宽为10Gbps，平均每个lane速度为2.5Gbps。为了理解这个速度可以对比一下PCIE协议的带宽。PCIE3.0作为现在CPU连接GPU的主流总线，其总线的带宽已经是很能打的存在了，一个PCIE lane的带宽为8Gbps，也比MIPI的带宽高不了太多，所以MIPI速度可以说相当快了），扯远了扯远了。看完上面可能会觉得，好像用MIPI协议驱动显示屏幕没有想象的那么难，还是很简单的，比如试试FPGA呢？</p>
 <h2 id="FPGA驱动MIPI？有点难度"><a href="#FPGA驱动MIPI？有点难度" class="headerlink" title="FPGA驱动MIPI？有点难度"></a>FPGA驱动MIPI？有点难度</h2><p>比如说HDMI这种接口直接用FPGA来写还是比较简单的，网上都能找到代码，比如<a href="https://www.fpga4fun.com/HDMI.html" target="_blank" rel="noopener">这里</a>。那是不是MIPI也可以这么操作？</p>
 <p>找一个别人写好的MIPI的FPGA驱动代码，选一个合适的lanes数量，比如就4个lanes吧。然后连接4lanes需要的十根线（8个数据线、2个时钟线），然后在电路上连接HDMI接口，搞定。简直简单的不讲武德。真的这么简单吗？并不是🙄</p>
@@ -342,7 +342,7 @@
 <p>之所以要有一个专门的面向屏幕的接口是因为由于不同的显示面板的参数不同，需要根据驱动面板自身的参数调整类似于<strong>刷新时间、空白时间等。</strong>拿MIPI为例，为了配置这些参数信息，就需要用接口中的Lanes按照<strong>MIPI规定的传输帧格式来传输数据</strong> （需要按照特定的握手顺序以及指令规则传输控制和视频数据），而比较蛋疼的是，MIPI的接口协议并不公开，大厂内部应该都有，但是作为第三方的DIY玩家来说，这些东西就是很难拿到的（或许可以通过看示波器信号来逆向解析协议，这个太硬核了，本渣流下了太菜的泪水😭）。</p>
 <p>因此想要直接用FPGA来驱动的话难度很大，代码并不像<a href="https://www.notion.so/HDMI-c7ce414b2b194c39a0bd8a3d563c1f04" target="_blank" rel="noopener">HDMI代码</a>这么简单🤔。那有没有什么桥梁，能够间接驱动显示屏幕呢？还真有</p>
 <h2 id="基于ASIC芯片的方案"><a href="#基于ASIC芯片的方案" class="headerlink" title="基于ASIC芯片的方案"></a>基于ASIC芯片的方案</h2><p>既然MIPI闭源了没法写FPGA程序，能否用已经成熟的ASCI来帮我们完成这部分功能？还真有，比如东芝的<strong>TC358x</strong>系列、TI的<strong>DSI8x</strong>系列、还有稚辉君提到的龙讯的LT6911方案等都是。这些方案相当于提供了一个API接口，提供了可以<strong>连接闭源的MIP的一个开源接口的桥梁</strong>。以TC358870为例，左侧为HDMI的输入（这部分直接接到显示源上就可以了，不需要进行专门的程序编写），右侧是2x4lanes的MIPI输出以及屏幕的配置I2C接口部分以及音频部分。</p>
-<p><img src="/.top//Untitled%202.png" alt="Untitled%202.png"></p>
+<p><img src="/images/MIPI/Untitled%202.png" alt></p>
 <p>通过I2C的接口配置传入屏幕的参数配置信息。所以如果这个芯片要适配不同的屏幕，就需要通过MCU给这个芯片发送对应的屏幕信息。这个方案就看起来可行得多😂。</p>
 <h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
 <li><a href="https://www.cnblogs.com/B1ue/p/10334900.html" target="_blank" rel="noopener">RPi 树莓派 DSI 接口研究 MIPI raspberry pi</a></li>
