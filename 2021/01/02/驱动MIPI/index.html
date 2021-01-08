@@ -1,338 +1,209 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang>
-<head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hardware,">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="如何驱动MIPI DSI -1MIPI DSI协议简介MIPI（Mobile Industry Processor Interface）是一个提供高速、低功耗的串行通讯协议。其定义了摄像头、显示器以及芯片到芯片的通讯连接（分别需要支持C-PHY、D-PHY或者M-PHY），现在广泛用于各种视频传输的方案中，比如手机显示屏啊、摄像头之类的，这里主要来说一下DSI的部分。 DSI（Display Se">
-<meta name="keywords" content="Hardware">
-<meta property="og:type" content="article">
-<meta property="og:title" content="如何驱动MIPI DSI -1">
-<meta property="og:url" content="http://felixqi.top/2021/01/02/驱动MIPI/index.html">
-<meta property="og:site_name" content="Felix&#39;s Blog">
-<meta property="og:description" content="如何驱动MIPI DSI -1MIPI DSI协议简介MIPI（Mobile Industry Processor Interface）是一个提供高速、低功耗的串行通讯协议。其定义了摄像头、显示器以及芯片到芯片的通讯连接（分别需要支持C-PHY、D-PHY或者M-PHY），现在广泛用于各种视频传输的方案中，比如手机显示屏啊、摄像头之类的，这里主要来说一下DSI的部分。 DSI（Display Se">
-<meta property="og:locale" content="default">
-<meta property="og:image" content="http://felixqi.top/images/MIPI/Untitled.png">
-<meta property="og:image" content="http://felixqi.top/images/MIPI/Untitled%201.png">
-<meta property="og:image" content="http://felixqi.top/images/MIPI/Untitled%202.png">
-<meta property="og:updated_time" content="2021-01-08T03:00:01.552Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何驱动MIPI DSI -1">
-<meta name="twitter:description" content="如何驱动MIPI DSI -1MIPI DSI协议简介MIPI（Mobile Industry Processor Interface）是一个提供高速、低功耗的串行通讯协议。其定义了摄像头、显示器以及芯片到芯片的通讯连接（分别需要支持C-PHY、D-PHY或者M-PHY），现在广泛用于各种视频传输的方案中，比如手机显示屏啊、摄像头之类的，这里主要来说一下DSI的部分。 DSI（Display Se">
-<meta name="twitter:image" content="http://felixqi.top/images/MIPI/Untitled.png">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          如何驱动MIPI DSI -1 - Felix的博客 | Felix&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://felixqi.top/2021/01/02/驱动MIPI/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="../../../../css/hux-blog.min.css">
+
+
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Felix&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
     }
-  };
 </script>
 
 
-
-  <link rel="canonical" href="http://felixqi.top/2021/01/02/驱动MIPI/">
-
-
-
-
-
-  <title>如何驱动MIPI DSI -1 | Felix's Blog</title>
-  
-
-
-
-
-
-
-
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
-
-  
-  
+    <!-- Main Content -->
     
-  
+<!-- Image to hack wechat -->
+<!-- <img src="http://felixqi.top/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
 
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Felix's Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle">To be a geek!</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://felixqi.top">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Felix Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="../../../../images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Felix's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">如何驱动MIPI DSI -1</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-01-02T08:55:29+08:00">
-                2021-01-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="../../../../categories/Exercise/" itemprop="url" rel="index">
-                    <span itemprop="name">Exercise</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg2.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Hardware" title="Hardware">Hardware</a>
+                        
+                    </div>
+                    <h1>如何驱动MIPI DSI -1</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Felix Qi on
+                        2021-01-02
+                    </span>
+                </div>
+            </div>
         </div>
-      </header>
-    
+    </div>
+</header>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-      
-      
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-      
-        <h1 id="如何驱动MIPI-DSI-1"><a href="#如何驱动MIPI-DSI-1" class="headerlink" title="如何驱动MIPI DSI -1"></a>如何驱动MIPI DSI -1</h1><h2 id="MIPI-DSI协议简介"><a href="#MIPI-DSI协议简介" class="headerlink" title="MIPI DSI协议简介"></a>MIPI DSI协议简介</h2><p><strong>MIPI</strong>（Mobile Industry Processor Interface）是一个提供<strong>高速、低功耗</strong>的<strong>串行通讯协议</strong>。其定义了摄像头、显示器以及芯片到芯片的通讯连接（分别需要支持C-PHY、D-PHY或者M-PHY），现在广泛用于各种视频传输的方案中，比如手机显示屏啊、摄像头之类的，这里主要来说一下DSI的部分。</p>
+                <h1 id="如何驱动MIPI-DSI-1"><a href="#如何驱动MIPI-DSI-1" class="headerlink" title="如何驱动MIPI DSI -1"></a>如何驱动MIPI DSI -1</h1><h2 id="MIPI-DSI协议简介"><a href="#MIPI-DSI协议简介" class="headerlink" title="MIPI DSI协议简介"></a>MIPI DSI协议简介</h2><p><strong>MIPI</strong>（Mobile Industry Processor Interface）是一个提供<strong>高速、低功耗</strong>的<strong>串行通讯协议</strong>。其定义了摄像头、显示器以及芯片到芯片的通讯连接（分别需要支持C-PHY、D-PHY或者M-PHY），现在广泛用于各种视频传输的方案中，比如手机显示屏啊、摄像头之类的，这里主要来说一下DSI的部分。</p>
 <p><strong>DSI</strong>（Display Serial Interface)，即用于显示的协议。其物理层的电路非常简单，如下图所示。主要就是clock以及lanes数据线均采用差分连接）。clock用于信号同步，lanes就是用于传输数据。</p>
-<p><img src="/images/MIPI/Untitled.png" alt></p>
+<p><img src="/images/MIPI/Untitled.png"></p>
 <p>根据使用场合对带宽的不同需求，可以自定义配置使用的lanes的数量。其速度可以参考下图</p>
-<p><img src="/images/MIPI/Untitled%201.png" alt></p>
+<p><img src="/images/MIPI/Untitled%201.png"></p>
 <p>比如4通道的DSI接口最高可以达到的带宽为10Gbps，平均每个lane速度为2.5Gbps。为了理解这个速度可以对比一下PCIE协议的带宽。PCIE3.0作为现在CPU连接GPU的主流总线，其总线的带宽已经是很能打的存在了，一个PCIE lane的带宽为8Gbps，也比MIPI的带宽高不了太多，所以MIPI速度可以说相当快了），扯远了扯远了。看完上面可能会觉得，好像用MIPI协议驱动显示屏幕没有想象的那么难，还是很简单的，比如试试FPGA呢？</p>
-<h2 id="FPGA驱动MIPI？有点难度"><a href="#FPGA驱动MIPI？有点难度" class="headerlink" title="FPGA驱动MIPI？有点难度"></a>FPGA驱动MIPI？有点难度</h2><p>比如说HDMI这种接口直接用FPGA来写还是比较简单的，网上都能找到代码，比如<a href="https://www.fpga4fun.com/HDMI.html" target="_blank" rel="noopener">这里</a>。那是不是MIPI也可以这么操作？</p>
+<h2 id="FPGA驱动MIPI？有点难度"><a href="#FPGA驱动MIPI？有点难度" class="headerlink" title="FPGA驱动MIPI？有点难度"></a>FPGA驱动MIPI？有点难度</h2><p>比如说HDMI这种接口直接用FPGA来写还是比较简单的，网上都能找到代码，比如<a target="_blank" rel="noopener" href="https://www.fpga4fun.com/HDMI.html">这里</a>。那是不是MIPI也可以这么操作？</p>
 <p>找一个别人写好的MIPI的FPGA驱动代码，选一个合适的lanes数量，比如就4个lanes吧。然后连接4lanes需要的十根线（8个数据线、2个时钟线），然后在电路上连接HDMI接口，搞定。简直简单的不讲武德。真的这么简单吗？并不是🙄</p>
 <p>原因在于<strong>MIPI协议并不是HDMI这种面向用户的接口</strong>。目前，面向用户的接口有<strong>HDMI、VGA、DVI</strong>，这些接口传输的数据仅仅有像素点的数据，即从上到下依次扫描每个像素点，发送RGB的数据。所以这些接口自然就是通用的，随便插到什么显示器上都能直接用，只要显示器有这个插口。但是我们的显示器里面除了显示面板，还有一个显示驱动板，将通用的HDMI、VGA等接口转化为给显示面板用的数据，那么这种面向屏幕的接口有哪些？直接面向屏幕的接口包括：</p>
 <ul>
@@ -340,392 +211,288 @@
 <li>专用的屏幕接口，比如<strong>MIPI DSI，MIPI DPI</strong>等</li>
 </ul>
 <p>之所以要有一个专门的面向屏幕的接口是因为由于不同的显示面板的参数不同，需要根据驱动面板自身的参数调整类似于<strong>刷新时间、空白时间等。</strong>拿MIPI为例，为了配置这些参数信息，就需要用接口中的Lanes按照<strong>MIPI规定的传输帧格式来传输数据</strong> （需要按照特定的握手顺序以及指令规则传输控制和视频数据），而比较蛋疼的是，MIPI的接口协议并不公开，大厂内部应该都有，但是作为第三方的DIY玩家来说，这些东西就是很难拿到的（或许可以通过看示波器信号来逆向解析协议，这个太硬核了，本渣流下了太菜的泪水😭）。</p>
-<p>因此想要直接用FPGA来驱动的话难度很大，代码并不像<a href="https://www.notion.so/HDMI-c7ce414b2b194c39a0bd8a3d563c1f04" target="_blank" rel="noopener">HDMI代码</a>这么简单🤔。那有没有什么桥梁，能够间接驱动显示屏幕呢？还真有</p>
+<p>因此想要直接用FPGA来驱动的话难度很大，代码并不像<a target="_blank" rel="noopener" href="https://www.notion.so/HDMI-c7ce414b2b194c39a0bd8a3d563c1f04">HDMI代码</a>这么简单🤔。那有没有什么桥梁，能够间接驱动显示屏幕呢？还真有</p>
 <h2 id="基于ASIC芯片的方案"><a href="#基于ASIC芯片的方案" class="headerlink" title="基于ASIC芯片的方案"></a>基于ASIC芯片的方案</h2><p>既然MIPI闭源了没法写FPGA程序，能否用已经成熟的ASCI来帮我们完成这部分功能？还真有，比如东芝的<strong>TC358x</strong>系列、TI的<strong>DSI8x</strong>系列、还有稚辉君提到的龙讯的LT6911方案等都是。这些方案相当于提供了一个API接口，提供了可以<strong>连接闭源的MIP的一个开源接口的桥梁</strong>。以TC358870为例，左侧为HDMI的输入（这部分直接接到显示源上就可以了，不需要进行专门的程序编写），右侧是2x4lanes的MIPI输出以及屏幕的配置I2C接口部分以及音频部分。</p>
-<p><img src="/images/MIPI/Untitled%202.png" alt></p>
+<p><img src="/images/MIPI/Untitled%202.png"></p>
 <p>通过I2C的接口配置传入屏幕的参数配置信息。所以如果这个芯片要适配不同的屏幕，就需要通过MCU给这个芯片发送对应的屏幕信息。这个方案就看起来可行得多😂。</p>
 <h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
-<li><a href="https://www.cnblogs.com/B1ue/p/10334900.html" target="_blank" rel="noopener">RPi 树莓派 DSI 接口研究 MIPI raspberry pi</a></li>
-<li><a href="https://pdf1.alldatasheet.com/datasheet-pdf/view/470145/TOSHIBA/TC358760.html" target="_blank" rel="noopener">TC3587x datasheet</a></li>
-<li><a href="https://datasheet.octopart.com/TC358870XBG(EL,H4" target="_blank" rel="noopener">TC358870XBG Datasheet</a>-Toshiba-datasheet-33023052.pdf)</li>
-<li><a href="https://toshiba.semicon-storage.com/us/semiconductor/product/interface-bridge-ics-for-mobile-peripheral-devices/display-interface-bridge-ics.html" target="_blank" rel="noopener">东芝MIPI芯片</a></li>
-<li><a href="https://www.ti.com/product/SN65DSI83" target="_blank" rel="noopener">TI MIPI芯片</a></li>
-<li><a href="https://github.com/peng-zhihui/HDMI-PI" target="_blank" rel="noopener">稚辉君HDMI PI项目</a></li>
+<li> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/B1ue/p/10334900.html">RPi 树莓派 DSI 接口研究 MIPI raspberry pi</a></li>
+<li><a target="_blank" rel="noopener" href="https://pdf1.alldatasheet.com/datasheet-pdf/view/470145/TOSHIBA/TC358760.html">TC3587x datasheet</a></li>
+<li><a target="_blank" rel="noopener" href="https://datasheet.octopart.com/TC358870XBG(EL,H4)-Toshiba-datasheet-33023052.pdf">TC358870XBG Datasheet</a></li>
+<li><a target="_blank" rel="noopener" href="https://toshiba.semicon-storage.com/us/semiconductor/product/interface-bridge-ics-for-mobile-peripheral-devices/display-interface-bridge-ics.html">东芝MIPI芯片</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ti.com/product/SN65DSI83">TI MIPI芯片</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/peng-zhihui/HDMI-PI">稚辉君HDMI PI项目</a></li>
 </ol>
 
-      
-    </div>
-    
-    
-    
 
-    
+                <hr>
 
-    
+                
 
-    
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2021/01/01/1/" data-toggle="tooltip" data-placement="top" title="宏观来看CPU如何与设备通讯">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
 
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="../../../../tags/Hardware/" rel="tag"># Hardware</a>
-          
-        </div>
-      
+                
 
-      
-      
-      
+                
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="../../01/1/" rel="next" title="宏观来看CPU如何与设备通讯">
-                <i class="fa fa-chevron-left"></i> 宏观来看CPU如何与设备通讯
-              </a>
-            
-          </div>
+            </div>
+    <!-- Side Catalog Container -->
+        
 
-          <span class="post-nav-divider"></span>
+    <!-- Sidebar Container -->
 
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Hardware" title="Hardware">Hardware</a>
+                        
+                    </div>
+                </section>
+                
 
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
 
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
+                    
+                        <li><a href="#" target="_blank">Bar</a></li>
+                    
+                        <li><a href="#" target="_blank">Example Friends</a></li>
+                    
+                        <li><a href="#" target="_blank">It helps SEO</a></li>
+                    
+                </ul>
+                
+            </div>
 
         </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
-  </div>
+</article>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
 
-      
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">Felix Qi</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
 
-          <nav class="site-state motion-element">
 
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="../../../../archives/">
-              
-                  <span class="site-state-item-count">2</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-categories">
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
                 
-                  <span class="site-state-item-count">1</span>
-                  <span class="site-state-item-name">categories</span>
                 
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">1</span>
-                  <span class="site-state-item-name">tags</span>
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/li-bai-25-10">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
                 
-              </div>
-            
 
-          </nav>
+                
 
-          
+                
 
-          
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/QY7">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
 
-          
-          
+                
 
-          
-          
-
-          
-
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Felix&#39;s Blog 2021 
+                </p>
+            </div>
         </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何驱动MIPI-DSI-1"><span class="nav-number">1.</span> <span class="nav-text">如何驱动MIPI DSI -1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MIPI-DSI协议简介"><span class="nav-number">1.1.</span> <span class="nav-text">MIPI DSI协议简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FPGA驱动MIPI？有点难度"><span class="nav-number">1.2.</span> <span class="nav-text">FPGA驱动MIPI？有点难度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于ASIC芯片的方案"><span class="nav-number">1.3.</span> <span class="nav-text">基于ASIC芯片的方案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献"><span class="nav-number">2.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
     </div>
-  </aside>
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
 
 
-        
-      </div>
-    </main>
+<!-- Bootstrap Core JavaScript -->
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Felix Qi</span>
-
-  
-</div>
+<script src="../../../../js/bootstrap.min.js"></script>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
 
 
 
-  <span class="post-meta-divider">|</span>
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
 
 
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://felixqi.top/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
 
 
+<!-- Google Analytics -->
 
 
-        
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-49627206-1';
+    var _gaDomain = 'huangxuan.me';
 
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
 </script>
 
 
 
 
+<!-- Baidu Tongji -->
 
+<script>
+    // dynamic User by Hux
+    var _baId = '4cc1f2d8f3067386cc5cdb626a202900';
 
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
 
+<!-- Side Catalog -->
 
-  
 
 
 
 
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
+<!-- Image to hack wechat -->
+<img src="http://felixqi.top/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
 
 </body>
+
 </html>
