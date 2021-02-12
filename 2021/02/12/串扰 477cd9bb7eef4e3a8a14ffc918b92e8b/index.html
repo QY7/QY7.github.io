@@ -13,11 +13,11 @@
 
     <title>
         
-          宏观来看CPU如何与设备通讯 - Felix的博客 | Felix&#39;s Blog
+          Felix的博客 | Felix&#39;s Blog
         
     </title>
 
-    <link rel="canonical" href="http://felixqi.top/2021/01/01/1/">
+    <link rel="canonical" href="http://felixqi.top/2021/02/12/串扰 477cd9bb7eef4e3a8a14ffc918b92e8b/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -172,14 +172,12 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#Hardware" title="Hardware">Hardware</a>
-                        
                     </div>
-                    <h1>宏观来看CPU如何与设备通讯</h1>
+                    <h1></h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by Felix Qi on
-                        2021-01-01
+                        2021-02-12
                     </span>
                 </div>
             </div>
@@ -198,52 +196,47 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="宏观来看CPU如何与设备通讯"><a href="#宏观来看CPU如何与设备通讯" class="headerlink" title="宏观来看CPU如何与设备通讯"></a>宏观来看CPU如何与设备通讯</h1><p>一台电脑的主要部分就是CPU、GPU、内存、硬盘、以及各种外围设备（包括USB、以太网、无线网、声卡等），其实我从很早开始就很好奇这些东西都是怎么个连接法，仅仅是学了一点点计算机组成还不足以解释心里的困惑🤣。所以才有这篇文章的折腾。</p>
-<p>以Intel的<strong>i7-6700K</strong>这个CPU的框架为例，其框图如下。</p>
-<p><img src="images/CPU/Untitled.png"></p>
-<ul>
-<li>左上角，CPU是通过PCIE（Peripheral Component Interconnect Express)接口连接GPU。</li>
-<li>左下角，连接到3个独立的显示控制上</li>
-<li>右侧，有两个内存通道，可以兼容DDR3或者DDR4。</li>
-<li>下侧，CPU通过DMI3.0总线连接南桥，并扩展连接到一系列的外围设备上。</li>
-</ul>
-<h2 id="1、PCIE总线"><a href="#1、PCIE总线" class="headerlink" title="1、PCIE总线"></a>1、PCIE总线</h2><h3 id="PCIE总线带宽"><a href="#PCIE总线带宽" class="headerlink" title="PCIE总线带宽"></a>PCIE总线带宽</h3><p>CPU需要直接连接的就是显卡和内存，因为这两者都是需要非常高的带宽来传输大量的数据。显卡走的就是16通道的<a target="_blank" rel="noopener" href="https://www.notion.so/PCIE-7a85671f91654ba1966c253463eee9a4">PCIE总线</a> ，拿现在最主流的<strong>PCIE3.0</strong>总线而言，其速度为8Gbps<em>16（也就是1GBps</em>16），所以总线一共的带宽为128Gbps。</p>
-<p><img src="images/CPU/Untitled%201.png"></p>
-<h3 id="PCIE总线拆分"><a href="#PCIE总线拆分" class="headerlink" title="PCIE总线拆分"></a>PCIE总线拆分</h3><p>但是看到图中CPU左侧连接的可以是<strong>1<em>16lanes<strong>，也可以是</strong>2</em>8lanes</strong>，还可以是<strong>1<em>8** and **2</em>4</strong>，这就是我们常说的<strong>16</strong>或者<strong>8+8</strong>以及<strong>8+4+4</strong>。不同的CPU不一样，一般来说Intel的<strong>直连CPU的PCIE</strong>只有16个通道，可以支持<strong>8+8</strong>或者<strong>8+4+4</strong>甚至<strong>8+4+2+2</strong>，这就要看CPU的型号支持了。</p>
-<p>那为啥会有把PCIE的16个通道拆分的需求呢？我猜测应该就是因为有的显卡性能没那么牛逼，不需要那么高的带宽来传输数据。比如GPU的处理数据的能力只有50Gbps，那么给他8个通道的PCIE3.0通道GPU的路子还是很宽敞。</p>
-<p>所以多余的通道可以拿来干点别的事情啊，比如接两个显卡它不香吗，或者多接一个M2的SSD硬盘也不错啊，总不能闲着浪费这个CPU的资源啊，所以就可以通过拆分PCIE通道来实现这个目的。这个就需要主板设计的帮助啦。比如主板上有两个PCIE3.0的插槽，两个都只用8个lanes，这样就可以同时插入两个显卡或者说插入一个显卡加一个SSD啦，听起来很不错的样子。虽然说高端显卡可能会受到这种情形的瓶颈限制，但是中低端显卡仍然可以“全力发挥”。而这种接口仍然是需要兼容16lanes的封装（虽然只有8个lanes的线是在用的）。</p>
-<p><img src="images/CPU/Untitled%202.png"></p>
-<p>以一个实际的主板举例哈。红色框出来的就是3个PCIE3.0<em>16的接口不过他们的带宽是不一样的，从上往下依次是x16，x8，x4。绿色的就是PCIE</em>1的插槽，显卡也是可以插在这里的，只不过性能就GG了。*<em>那么假如同时插最上面的两个PCIE</em>16卡槽，会发生什么？**</p>
-<p>由于PCIE的一共就16个通道，因此第一个插槽就会降速到x8，所以最后的结果也就是两个x8啦。所以也不是说一定双显卡交火速度就快，一个高端显卡带一个低端显卡，说不定慢的那个显卡直接把高端显卡带宽拉低到8GBps😂，人间惨剧。</p>
-<h2 id="2、内存"><a href="#2、内存" class="headerlink" title="2、内存"></a>2、内存</h2><p>说完CPU左边的事情，我们来说CPU右边。也就是主板的内存。</p>
-<p>在CPU处理数据的时候，就是从硬盘中取数据，然后进行各种操作。但是CPU的速度非常快，而普通的存储设备读写速度都比较慢，比如<strong>机械硬盘</strong>（采用磁盘和机械读盘结构，速度最慢）或者<strong>SSD</strong>（使用NAND FLASH），这两种的速度都很难跟上CPU的速度（不过现在已经有最新的SSD速度能够达到早期的CPU的处理速度的能力了）。</p>
-<p>计算机组成告诉我们，为了平衡两个之间的带宽差就需要用到内存（DRAM，Dynamic Random Access Memory）。我们以现在的主流的DDR3的带宽为例，其速度为</p>
-<ul>
-<li>DDR3 1066：8.5 GB/s</li>
-<li>DDR3 1333：10.6 GB/s</li>
-<li>DDR3 1600：12.8 G MB/s</li>
-<li>DDR3 1866：14.9 G MB/s</li>
-</ul>
-<p>内存则通过内存管理单元与CPU进行通讯，而内存管理单元目前已经做到CPU内部了（以前是北桥来完成）。如下图所示，6700k支持两个内存通道连接，一个通道可以连接一个内存条（叫做<strong>1DPC, 1 DIMM Per Channel</strong>)，也可以连接两个内存条（<strong>2DPC，2 DIMM Per Channel</strong>)</p>
-<p><img src="/.top//Untitled%203.png"></p>
-<p>如下左图的红色框所示就是一个双通道四插槽的内存条接口。右侧则是一个四通道八插槽的主板</p>
-<p><img src="images/CPU/Untitled%204.png"></p>
-<p>两通道2DPC</p>
-<p><img src="images/CPU/Untitled%205.png"></p>
-<p>四通道2DPC</p>
-<h2 id="3、南桥-South-Bridge"><a href="#3、南桥-South-Bridge" class="headerlink" title="3、南桥(South Bridge)"></a>3、南桥(South Bridge)</h2><p>看过维修厮的视频看多了，肯定还是要来讲一讲三板斧中的淦南桥。下图中的Chipset就是南桥，与CPU连接就是通过DMI总线连接，DMI3.0的带宽基本相当于PCIE3.0的4 lanes的速度，也就是4GBps（32Gbps）。通过南桥，又会把这个带宽细分出新的PCIE接口、USB接口、网卡、声卡、SATA这些，也会与BIOS通过SPI通讯协议连接。</p>
-<p><img src="images/CPU/Untitled.png"></p>
-<p>由于这些外围设备对带宽的需求相对来说没有显卡和内存条那么高，所以通过DMI总线基本就能搞定这些数据啦。而南桥就相当于电脑除了CPU之外的第二个脑子，管理一大箩筐的外设设备。这样CPU也能专心搞自己的高速数据处理，不用隔三差五的被类似于USB这些小弟打扰。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>找了一张I7的Die的图</p>
-<p><img src="images/CPU/Untitled%206.png"></p>
-<p>最右侧的就是上面提到的连接PCIE接口的、连接DMI接口的部分。下面的就是内存处理单元，这两部分可以说就是CPU控制与外部连接的接口啦。所以如果仅仅从宏观上来看，CPU的原理是不是已经一目了然了呢！</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
-<li><a target="_blank" rel="noopener" href="https://www.cs.uaf.edu/2009/fall/cs44projrussell/index.html">北桥的消失</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.eteknix.com/intel-z270-chipset-block-diagram-leaked/">Intel Z270框架</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/98014771#:~:text=M.2%E7%9B%B4%E8%BF%9ECPU,M.2%E6%8F%92%E6%A7%BD%E4%BD%BF%E7%94%A8%E3%80%82">M.2的直连CPU的接口怎么来的</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Direct_Media_Interface">DMI</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19A411a7sC">【硬件科普】为什么装机内存条推荐安装到第24槽而不是13槽？</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.intel.com/content/dam/www/public/us/en/documents/white-papers/ia-introduction-basics-paper.pdf">Intel架构介绍白皮书</a></li>
+                <h1 id="串扰"><a href="#串扰" class="headerlink" title="串扰"></a>串扰</h1><p>Classification: 信号<br>Created: Feb 12, 2021 11:07 AM<br>Created by: Felix Qi</p>
+<p>最近看了一个油管频道分享的视频，是Eric Bogatin（《信号完整性与电源完整性分析》作者）与一个油管主对于串扰的讨论，觉得很有意思，里面使用的动图非常简单易懂，使得晦涩难懂的东西变得非常简单。由于原视频是全英文，于是整理了以下这篇文章，方便感兴趣但是没有条件观看的朋友们一起学习，想要看原视频的可以到这个<a href="http://link.zhihu.com/?target=https://www.youtube.com/watch?v=EF7SxgcDfCo&ab_channel=RobertFeranec">网址</a>。</p>
+<h1 id="串扰-电场耦合"><a href="#串扰-电场耦合" class="headerlink" title="串扰-电场耦合"></a><strong>串扰-电场耦合</strong></h1><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a><strong>基本概念</strong></h3><p><strong>CrossTalk，中文名为串扰。根据维基百科，串扰在电子学上是指两条信号线之间的耦合现象。这是因为空间距离近的信号线之间会出现不希望的电感性</strong>和<strong>电容性耦合</strong>从而互相干扰。从这个概念出发，我们知道串扰与耦合有关。而电磁场的耦合无非就是<strong>电场</strong>和<strong>磁场</strong>两部分的耦合。我们首先来电场耦合的效应。</p>
+<p>以下图中的PCB走线为例进行说明，图中红色蓝色为两根PCB走线，绿色为参考地平面。走线的中间靠的比较近，两侧距离比较远。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-053a11460bc14ff4b22be49527680fe8_720w.jpg?source=3af55fa1" alt="https://pic1.zhimg.com/80/v2-053a11460bc14ff4b22be49527680fe8_720w.jpg?source=3af55fa1"></p>
+<p>我们取中间部分的横截面截图如下图所示。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-5d1afbd01f4b6d9b78aa126d43e7c088_720w.jpg?source=3af55fa1" alt="https://pic4.zhimg.com/80/v2-5d1afbd01f4b6d9b78aa126d43e7c088_720w.jpg?source=3af55fa1"></p>
+<p>当红色导线相对于蓝色导线有电势差的时候，他们之间就会产生电场（虚线即为电场线）。根据麦克斯韦方程组</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/equation?tex=%5CLarge+I_D=%5Cepsilon%5Cfrac%7B%5Cpartial+%5CPhi_E%7D%7B%5Cpartial+t%7D+%5C%5C">https://www.zhihu.com/equation?tex=%5CLarge+I_D%3D%5Cepsilon%5Cfrac%7B%5Cpartial+%5CPhi_E%7D%7B%5Cpartial+t%7D+%5C%5C</a></p>
+<p>其中$\Phi_E$为电场的通量，由于变化的电场会导致电通量的改变，因此当红色导体上发生电压的变化时，就会通过空间电场耦合，产生<strong>位移电流</strong>。其实简单来看就是在红色导体和蓝色导体之间以及红色导体和参考平面之间存在寄生电容。</p>
+<h2 id="电场耦合的特点"><a href="#电场耦合的特点" class="headerlink" title="电场耦合的特点"></a><strong>电场耦合的特点</strong></h2><p>前面提到，导体之间电场的耦合的效应可以视为<strong>集总电容$C_m$**，如下图所示。当红色导体上有信号的上升沿来临的时候，变化的电场导致的位移电流$I_D$就会从$C_m$流过。此时从耦合处开始，电流将分别往导线的前端和后端流动（如果是均匀传输线，电流看到的两端阻抗是一样的，因此电流会等分为二）。这里，我们将干扰源出发的一端叫做</strong>近端（Near End)<strong>，将干扰源传递方向的一端叫做</strong>远端（Far End）**，下图中信号从左往右传播，因此左边为近端，右边为远端。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-98d5a14a7d417ff51a7fb6e22dbfe4d9_720w.jpg?source=3af55fa1" alt="https://pic1.zhimg.com/80/v2-98d5a14a7d417ff51a7fb6e22dbfe4d9_720w.jpg?source=3af55fa1"></p>
+<p>我们取其中靠的比较近的一段来看</p>
+<p><img src="https://pic1.zhimg.com/80/v2-175a1f7441f466621cfa4c12cf988b5a_720w.jpg?source=3af55fa1" alt="https://pic1.zhimg.com/80/v2-175a1f7441f466621cfa4c12cf988b5a_720w.jpg?source=3af55fa1"></p>
+<p>干扰的电流将同时往近端和远端传播，而传播的电流噪声就会在传输线上产生电压干扰。由于不管是近端还是远端，电流的方向都是与其传播方向一致，因此受扰信号表现为“正信号”。下面的动画为电容耦合导致的在近端和远端的响应。</p>
+<p><img src="/.top//capacitor_couple_short.gif" alt="%E4%B8%B2%E6%89%B0%20477cd9bb7eef4e3a8a14ffc918b92e8b/capacitor_couple_short.gif"></p>
+<p>图中最上面为上升沿信号传递过程的动画，中间为耦合的PCB示意图，最下面为受扰线上产生的干扰信号的动画。其中竖着的紫色的一块为耦合点。当上升沿传递到耦合点处，可以看到，近端和远端均为<strong>正的干扰信号</strong>，并分别向近端和远端传播。</p>
+<p>对于远端来说，由于干扰信号会在朝远端传播的沿途上不断产生新的干扰信号，之前产生的干扰信号也会以相同的速度向远端传播。因此，旧的干扰信号就会叠加到新的干扰信号上，导致远端的干扰信号逐渐变大；对于近端来说，新产生的干扰信号虽然也会向近端传播，但由于新产生的干扰信号在旧的干扰信号“后面”，因此在近端的表现就是干扰信号的“拓宽”。语言描述还是太苍白了，看下面的动图就一下子明白啦。</p>
+<p><img src="/.top//capacitor_couple_width.gif" alt="%E4%B8%B2%E6%89%B0%20477cd9bb7eef4e3a8a14ffc918b92e8b/capacitor_couple_width.gif"></p>
+<p>因此，如果耦合的长度特别长，在远端的干扰信号就会不断变大。对于受扰线而言，其并不知道上面的电压信号是“干扰”还是“信号”，因此这个干扰的信号如果足够大就会导致受扰线上的元件工作异常。</p>
+<h1 id="串扰-磁场耦合"><a href="#串扰-磁场耦合" class="headerlink" title="串扰-磁场耦合"></a><strong>串扰-磁场耦合</strong></h1><h2 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a><strong>基本概念</strong></h2><p>由于电压信号传递的过程中也伴随着电流在沿途的传播。根据安培环路定理，通电导线的周围会产生磁场。变化的磁场会对周围电路产生的影响等效为互感。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-e7c4cff215067c4c56a3d4225e02b84b_720w.jpg?source=3af55fa1" alt="https://pic1.zhimg.com/80/v2-e7c4cff215067c4c56a3d4225e02b84b_720w.jpg?source=3af55fa1"></p>
+<h2 id="磁场耦合的特点"><a href="#磁场耦合的特点" class="headerlink" title="磁场耦合的特点"></a><strong>磁场耦合的特点</strong></h2><p>在上升沿传递的过程中，其产生的电流的方向如下图中右侧线下面的黑色方向所示。根据楞次定理，受扰线上会产生对应的电流会阻碍磁场的增大，因此如图所示，会受扰线上会产生顺时针方向的蓝色的电流。同样，也会分为两拨，分别往近端和远端传播。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-504a3b6c9689953c745f1aed82dbcc69_720w.jpg?source=3af55fa1" alt="https://pic1.zhimg.com/80/v2-504a3b6c9689953c745f1aed82dbcc69_720w.jpg?source=3af55fa1"></p>
+<p>所以从图中的电流方向可知，产生的干扰信号在远端的电压表现为负值，在近端的电压表现为正值，看下面的动图就一目了然啦</p>
+<p><img src="/.top//capacitor_inductor_short.gif" alt="%E4%B8%B2%E6%89%B0%20477cd9bb7eef4e3a8a14ffc918b92e8b/capacitor_inductor_short.gif"></p>
+<p>同样，如果耦合的长度非常长，其远端的信号会逐渐变大。</p>
+<p><img src="/.top//capacitor_inductor_width.gif" alt="%E4%B8%B2%E6%89%B0%20477cd9bb7eef4e3a8a14ffc918b92e8b/capacitor_inductor_width.gif"></p>
+<h1 id="如何减少串扰"><a href="#如何减少串扰" class="headerlink" title="如何减少串扰"></a><strong>如何减少串扰</strong></h1><ol>
+<li><strong>利用电场耦合和磁场耦合的抵消</strong></li>
+</ol>
+<p>通过前面的分析可以看到，远端的噪声往往又是比近端的噪声幅值更大，因此我们是否有办法降低远端的噪声幅值？由于<strong>电场耦合和磁场耦合在远端产生的噪声极性是相反</strong>的，那么我们自然就想到，如果产生的两个噪声的幅值是一样的话，就可以在远端抵消噪声。而根据Eric Bogatin的说法，如果想要抵消，就需要把走线放在<strong>中间层</strong>，<strong>此时电场耦合的噪声和磁场耦合的噪声在远端的大小相等，方向相反</strong>。而如果放在表层，表层走线只有一半是被FR4介质填充的，而空气的介电常数小于FR4，因此电场耦合的作用会变弱（另一方面，电介质对于磁场强度是没有影响的），导致净干扰为负（表现为磁场干扰信号的特性）。因此，对于比较关键的高频信号的走线，我们最好将其走到中间层！所以两层板是天然的不适合用于高频走线的。</p>
+<p><strong>2. 通过减少源头</strong></p>
+<p>由于干扰是变化的电磁场导致的，而其大小与上升沿下降沿的斜率息息相关。如果能降低边沿的速度，就能减少Cross Talk。而且对于EMI来说，信号的上升沿斜率越小也能使得噪声减少。因此如果能满足正常的时序需求的情况时，应当尽可能降低上升沿的斜率。</p>
+<p><strong>3. 增大距离</strong></p>
+<p>我们知道距离源越远时，电场和磁场强度都会急剧下降。因此，如果Layout允许，将干扰线和受扰线的距离增大也是可以减少串扰的。</p>
+<p><strong>4. 减小信号线和参考地平面的距离</strong></p>
+<p>这种方法可以减小高频信号线对外辐射出去的电磁场。对四层板来说，其第一层和第二层之间的距离可以做到几十um，这个距离能很好地限制信号的对外辐射；对于两层板来说，其厚度普遍都是1mm左右，可以看到其远远大于第一层和第二层的距离，所以从这个角度来说，两层板也不适合用于高速板子的Layout。我们最好选择<strong>四层</strong>及以上的板子，然后<strong>高频走线走中间层，参考地走相邻的层。</strong></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a><strong>参考文献</strong></h1><ol>
+<li><a href="http://link.zhihu.com/?target=https://zh.wikipedia.org/wiki/%25E4%25BD%258D%25E7%25A7%25BB%25E9%259B%25BB%25E6%25B5%2581">维基百科-位移电流</a></li>
+<li><a href="http://link.zhihu.com/?target=https://www.youtube.com/watch?v=EF7SxgcDfCo&ab_channel=RobertFeranec">What Every PCB Designer Should Know - Crosstalk Explained (with Eric Bogatin)</a></li>
 </ol>
 
 
@@ -253,10 +246,10 @@
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2021/01/02/驱动MIPI/" data-toggle="tooltip" data-placement="top" title="如何驱动MIPI DSI -1">&larr; Previous Post</a>
-                        </li>
                     
+                        <li class="next">
+                            <a href="/2021/01/02/驱动MIPI/" data-toggle="tooltip" data-placement="top" title="如何驱动MIPI DSI -1">Next Post &rarr;</a>
+                        </li>
                     
                 </ul>
 
@@ -282,8 +275,6 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#Hardware" title="Hardware">Hardware</a>
-                        
                     </div>
                 </section>
                 
