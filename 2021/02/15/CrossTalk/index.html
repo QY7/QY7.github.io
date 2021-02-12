@@ -13,11 +13,11 @@
 
     <title>
         
-          Felix的博客 | Felix&#39;s Blog
+          串扰 - Felix的博客 | Felix&#39;s Blog
         
     </title>
 
-    <link rel="canonical" href="http://felixqi.top/2021/02/12/CrossTalk/">
+    <link rel="canonical" href="http://felixqi.top/2021/02/15/CrossTalk/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -172,12 +172,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                          <a class="tag" href="/tags/#Hardware" title="Hardware">Hardware</a>
+                        
                     </div>
-                    <h1></h1>
+                    <h1>串扰</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by Felix Qi on
-                        2021-02-12
+                        2021-02-15
                     </span>
                 </div>
             </div>
@@ -202,27 +204,26 @@
 <p><img src="https://pic1.zhimg.com/80/v2-053a11460bc14ff4b22be49527680fe8_720w.jpg?source=3af55fa1" alt="https://pic1.zhimg.com/80/v2-053a11460bc14ff4b22be49527680fe8_720w.jpg?source=3af55fa1"></p>
 <p>我们取中间部分的横截面截图如下图所示。</p>
 <p><img src="https://pic4.zhimg.com/80/v2-5d1afbd01f4b6d9b78aa126d43e7c088_720w.jpg?source=3af55fa1" alt="https://pic4.zhimg.com/80/v2-5d1afbd01f4b6d9b78aa126d43e7c088_720w.jpg?source=3af55fa1"></p>
-<p>当红色导线相对于蓝色导线有电势差的时候，他们之间就会产生电场（虚线即为电场线）。根据麦克斯韦方程组</p>
-<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/equation?tex=%5CLarge+I_D=%5Cepsilon%5Cfrac%7B%5Cpartial+%5CPhi_E%7D%7B%5Cpartial+t%7D+%5C%5C">https://www.zhihu.com/equation?tex=%5CLarge+I_D%3D%5Cepsilon%5Cfrac%7B%5Cpartial+%5CPhi_E%7D%7B%5Cpartial+t%7D+%5C%5C</a></p>
+<p>当红色导线相对于蓝色导线有电势差的时候，他们之间就会产生电场（虚线即为电场线）。根据麦克斯韦方程组<a target="_blank" rel="noopener" href="https://www.zhihu.com/equation?tex=%5CLarge+I_D=%5Cepsilon%5Cfrac%7B%5Cpartial+%5CPhi_E%7D%7B%5Cpartial+t%7D+%5C%5C">https://www.zhihu.com/equation?tex=%5CLarge+I_D%3D%5Cepsilon%5Cfrac%7B%5Cpartial+%5CPhi_E%7D%7B%5Cpartial+t%7D+%5C%5C</a></p>
 <p>其中$\Phi_E$为电场的通量，由于变化的电场会导致电通量的改变，因此当红色导体上发生电压的变化时，就会通过空间电场耦合，产生<strong>位移电流</strong>。其实简单来看就是在红色导体和蓝色导体之间以及红色导体和参考平面之间存在寄生电容。</p>
 <h2 id="电场耦合的特点"><a href="#电场耦合的特点" class="headerlink" title="电场耦合的特点"></a><strong>电场耦合的特点</strong></h2><p>前面提到，导体之间电场的耦合的效应可以视为<strong>集总电容$C_m$**，如下图所示。当红色导体上有信号的上升沿来临的时候，变化的电场导致的位移电流$I_D$就会从$C_m$流过。此时从耦合处开始，电流将分别往导线的前端和后端流动（如果是均匀传输线，电流看到的两端阻抗是一样的，因此电流会等分为二）。这里，我们将干扰源出发的一端叫做</strong>近端（Near End)<strong>，将干扰源传递方向的一端叫做</strong>远端（Far End）**，下图中信号从左往右传播，因此左边为近端，右边为远端。</p>
 <p><img src="https://pic1.zhimg.com/80/v2-98d5a14a7d417ff51a7fb6e22dbfe4d9_720w.jpg?source=3af55fa1" alt="https://pic1.zhimg.com/80/v2-98d5a14a7d417ff51a7fb6e22dbfe4d9_720w.jpg?source=3af55fa1"></p>
 <p>我们取其中靠的比较近的一段来看</p>
 <p><img src="https://pic1.zhimg.com/80/v2-175a1f7441f466621cfa4c12cf988b5a_720w.jpg?source=3af55fa1" alt="https://pic1.zhimg.com/80/v2-175a1f7441f466621cfa4c12cf988b5a_720w.jpg?source=3af55fa1"></p>
 <p>干扰的电流将同时往近端和远端传播，而传播的电流噪声就会在传输线上产生电压干扰。由于不管是近端还是远端，电流的方向都是与其传播方向一致，因此受扰信号表现为“正信号”。下面的动画为电容耦合导致的在近端和远端的响应。</p>
-<p><img src="/images/CrossTalk/capacitor_couple_short.gif" alt="/images/CrossTalk/capacitor_couple_short.gif"></p>
+<p><img src="/images/CrossTalk/capacitor_couple_short.gif"></p>
 <p>图中最上面为上升沿信号传递过程的动画，中间为耦合的PCB示意图，最下面为受扰线上产生的干扰信号的动画。其中竖着的紫色的一块为耦合点。当上升沿传递到耦合点处，可以看到，近端和远端均为<strong>正的干扰信号</strong>，并分别向近端和远端传播。</p>
 <p>对于远端来说，由于干扰信号会在朝远端传播的沿途上不断产生新的干扰信号，之前产生的干扰信号也会以相同的速度向远端传播。因此，旧的干扰信号就会叠加到新的干扰信号上，导致远端的干扰信号逐渐变大；对于近端来说，新产生的干扰信号虽然也会向近端传播，但由于新产生的干扰信号在旧的干扰信号“后面”，因此在近端的表现就是干扰信号的“拓宽”。语言描述还是太苍白了，看下面的动图就一下子明白啦。</p>
-<p><img src="/images/CrossTalk/capacitor_couple_width.gif" alt="/images/CrossTalk/capacitor_couple_width.gif"></p>
+<p><img src="/images/CrossTalk/capacitor_couple_width.gif"></p>
 <p>因此，如果耦合的长度特别长，在远端的干扰信号就会不断变大。对于受扰线而言，其并不知道上面的电压信号是“干扰”还是“信号”，因此这个干扰的信号如果足够大就会导致受扰线上的元件工作异常。</p>
 <h1 id="串扰-磁场耦合"><a href="#串扰-磁场耦合" class="headerlink" title="串扰-磁场耦合"></a><strong>串扰-磁场耦合</strong></h1><h2 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a><strong>基本概念</strong></h2><p>由于电压信号传递的过程中也伴随着电流在沿途的传播。根据安培环路定理，通电导线的周围会产生磁场。变化的磁场会对周围电路产生的影响等效为互感。</p>
 <p><img src="https://pic1.zhimg.com/80/v2-e7c4cff215067c4c56a3d4225e02b84b_720w.jpg?source=3af55fa1" alt="https://pic1.zhimg.com/80/v2-e7c4cff215067c4c56a3d4225e02b84b_720w.jpg?source=3af55fa1"></p>
 <h2 id="磁场耦合的特点"><a href="#磁场耦合的特点" class="headerlink" title="磁场耦合的特点"></a><strong>磁场耦合的特点</strong></h2><p>在上升沿传递的过程中，其产生的电流的方向如下图中右侧线下面的黑色方向所示。根据楞次定理，受扰线上会产生对应的电流会阻碍磁场的增大，因此如图所示，会受扰线上会产生顺时针方向的蓝色的电流。同样，也会分为两拨，分别往近端和远端传播。</p>
 <p><img src="https://pic1.zhimg.com/80/v2-504a3b6c9689953c745f1aed82dbcc69_720w.jpg?source=3af55fa1" alt="https://pic1.zhimg.com/80/v2-504a3b6c9689953c745f1aed82dbcc69_720w.jpg?source=3af55fa1"></p>
 <p>所以从图中的电流方向可知，产生的干扰信号在远端的电压表现为负值，在近端的电压表现为正值，看下面的动图就一目了然啦</p>
-<p><img src="/images/CrossTalk/capacitor_inductor_short.gif" alt="/images/CrossTalk/capacitor_inductor_short.gif"></p>
+<p><img src="/images/CrossTalk/capacitor_inductor_short.gif"></p>
 <p>同样，如果耦合的长度非常长，其远端的信号会逐渐变大。</p>
-<p><img src="/images/CrossTalk/capacitor_inductor_width.gif" alt="/images/CrossTalk/capacitor_inductor_width.gif"></p>
+<p><img src="/images/CrossTalk/capacitor_inductor_width.gif"></p>
 <h1 id="如何减少串扰"><a href="#如何减少串扰" class="headerlink" title="如何减少串扰"></a><strong>如何减少串扰</strong></h1><ol>
 <li><strong>利用电场耦合和磁场耦合的抵消</strong></li>
 </ol>
@@ -274,6 +275,8 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
+                          <a class="tag" href="/tags/#Hardware" title="Hardware">Hardware</a>
+                        
                     </div>
                 </section>
                 
