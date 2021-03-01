@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="/js/hexo_resize_image.js"></script>
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Wox DIY - Felix的博客 | Felix&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://felixqi.top/2021/03/01/Wox DIY a3a80f98ef2340cc90dc5ff63cfef1de/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="../../../../css/hux-blog.min.css">
+
+
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Felix&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://felixqi.top/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg2.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>Wox DIY</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Felix Qi on
+                        2021-03-01
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Wox-DIY"><a href="#Wox-DIY" class="headerlink" title="Wox DIY"></a>Wox DIY</h1><p>Wox是一个开源的软件，这个项目是一个学习项目的过程，通过修改Wox，自定义其功能，并在这个过程中学习Windows软件的开发过程。</p>
+<h2 id="源代码编译并且release"><a href="#源代码编译并且release" class="headerlink" title="源代码编译并且release"></a>源代码编译并且release</h2><p>先把Wox的代码clone下来，用VisualStudio打开。由于Wox使用的.Net版本是4.6.2以上的，需要打开的时候下载对应版本的.net库文件然后安装。然后就可以在Visual Studio里面查看代码了。通过这里选择编译的结果是<strong>release</strong>还是<strong>debug</strong>，选好之后点击<strong>Build→build solution。</strong>生成的文件在对应的项目文件夹下的<code>Output/Debug</code>或者<code>Output/Release</code>下面。</p>
+<p><img src="/.top//Untitled.png"></p>
+<p>由于这个build是针对C#文件进行编译的，python文件肯定不会编译。而如果想要Wox软件支持Python的扩展，还需要把源项目下的<code>JsonRPC</code>文件夹拷贝到软件根目录。最好把<code>runtime、Languages</code>这些文件夹也一并拷贝了。</p>
+<h2 id="修改命中文字的颜色"><a href="#修改命中文字的颜色" class="headerlink" title="修改命中文字的颜色"></a>修改命中文字的颜色</h2><p>默认的命中的文字颜色是灰色的，而且软件内部不支持颜色的修改。强迫症的我想要实现下面图中的效果。</p>
+<p><img src="/.top//Untitled%201.png"></p>
+<p>修改很简单，找到<code>base.xaml</code>，这个文件是所有的显示主题的基础。可以看到选中的颜色都是灰色</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;SolidColorBrush x:Key=<span class="string">&quot;BaseItemHighlightColor&quot;</span> Color=<span class="string">&quot;LightGray&quot;</span>/&gt;</span><br><span class="line">&lt;SolidColorBrush x:Key=<span class="string">&quot;BaseItemSelectedHighlightColor&quot;</span> Color=<span class="string">&quot;LightGray&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
+<p>这里想把文字改成橘黄色，所以修改其中代码把颜色改为<code>#ff9800</code>。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;SolidColorBrush x:Key=<span class="string">&quot;BaseItemHighlightColor&quot;</span> Color=<span class="string">&quot;#ff9800&quot;</span>/&gt;</span><br><span class="line">&lt;SolidColorBrush x:Key=<span class="string">&quot;BaseItemSelectedHighlightColor&quot;</span> Color=<span class="string">&quot;#ff9800&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="更改Context"><a href="#更改Context" class="headerlink" title="更改Context"></a>更改Context</h2><p>默认的Context只能用notepad打开文件，想实现用sublime打开文件，并且如果是pdf文件，默认使用sumatraPDF进行打开。</p>
+<p>由于原来的<code>Context</code>里面有<code>notepad</code>打开，所以全项目搜索<code>notepad</code>。于是顺藤摸瓜找到<code>ContextMenuLoader.cs</code>文件，找到下面这段代码</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Result <span class="title">CreateOpenWithEditorResult</span>(<span class="params">SearchResult <span class="keyword">record</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> editorPath = <span class="string">&quot;notepad.exe&quot;</span>; <span class="comment">// TODO add the ability to create a custom editor</span></span><br><span class="line">    <span class="keyword">var</span> name = <span class="string">&quot;Open With Editor: &quot;</span> + Path.GetFileNameWithoutExtension(editorPath);</span><br><span class="line">	  <span class="keyword">return</span> <span class="keyword">new</span> Result</span><br><span class="line">	  &#123;</span><br><span class="line">	      Title = name_text,</span><br><span class="line">	      Action = _ =&gt;</span><br><span class="line">	      &#123;</span><br><span class="line">	          <span class="keyword">try</span></span><br><span class="line">	          &#123;</span><br><span class="line">	              Process.Start(pdfPath, <span class="keyword">record</span>.FullPath);</span><br><span class="line">	              <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	          &#125;</span><br><span class="line">	          catch (Exception e)</span><br><span class="line">	          &#123;</span><br><span class="line">	              <span class="keyword">var</span> message = <span class="string">$&quot;Fail to editor for file at <span class="subst">&#123;<span class="keyword">record</span>.FullPath&#125;</span>&quot;</span>;</span><br><span class="line">	              LogException(message, e);</span><br><span class="line">	              _context.API.ShowMsg(message);</span><br><span class="line">	              <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	          &#125;</span><br><span class="line">	      &#125;,</span><br><span class="line">	      IcoPath = editorPath</span><br><span class="line">	  &#125;;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>这个函数就是根据搜索的<code>record</code>返回一个结果的<code>list</code>，所以只需要根据后缀名返回对应的<code>Context</code>即可，修改后的代码如下</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Result <span class="title">CreateOpenWithEditorResult</span>(<span class="params">SearchResult <span class="keyword">record</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> editorPath = <span class="string">&quot;notepad.exe&quot;</span>; <span class="comment">// TODO add the ability to create a custom editor</span></span><br><span class="line">    <span class="built_in">string</span> pdfPath = <span class="string">@&quot;C:\Users\Administrator\AppData\Local\SumatraPDF\SumatraPDF.exe&quot;</span>;</span><br><span class="line">    <span class="keyword">var</span> name_text = <span class="string">&quot;Open With Editor: &quot;</span> + Path.GetFileNameWithoutExtension(editorPath);</span><br><span class="line">    <span class="keyword">var</span> name_pdf = <span class="string">&quot;Open With Sumatra&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span>(Path.GetExtension(<span class="keyword">record</span>.FullPath) == <span class="string">&quot;.pdf&quot;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Result</span><br><span class="line">        &#123;</span><br><span class="line">            Title = name_pdf,</span><br><span class="line">            Action = _ =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">try</span></span><br><span class="line">                &#123;</span><br><span class="line">                    Process.Start(pdfPath, <span class="keyword">record</span>.FullPath);</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                catch (Exception e)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">var</span> message = <span class="string">$&quot;Fail to editor for file at <span class="subst">&#123;<span class="keyword">record</span>.FullPath&#125;</span>&quot;</span>;</span><br><span class="line">                    LogException(message, e);</span><br><span class="line">                    _context.API.ShowMsg(message);</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            IcoPath = editorPath</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Result</span><br><span class="line">        &#123;</span><br><span class="line">            Title = name_text,</span><br><span class="line">            Action = _ =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">try</span></span><br><span class="line">                &#123;</span><br><span class="line">                    Process.Start(pdfPath, <span class="keyword">record</span>.FullPath);</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                catch (Exception e)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">var</span> message = <span class="string">$&quot;Fail to editor for file at <span class="subst">&#123;<span class="keyword">record</span>.FullPath&#125;</span>&quot;</span>;</span><br><span class="line">                    LogException(message, e);</span><br><span class="line">                    _context.API.ShowMsg(message);</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            IcoPath = editorPath</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="修改app图标"><a href="#修改app图标" class="headerlink" title="修改app图标"></a>修改app图标</h2><p>Wox自带的图标也是丑的一言难尽，当然需要修改一下了。</p>
+<p>右键Wox项目，点<code>properties</code>，然后Application项可以设置最后生成的exe文件的图标，Resources中可以把默认的图标ico文件删除之后重新载入新的图标，这样就完成了图标的更换。这个是<code>trayico</code>，如果要修改打包的软件的ico，还有软件左上角的ico，还需要修改<code>app.ico</code>，具体位置我忘了，麻烦死了。不想改了。</p>
+<h2 id="定位Bug"><a href="#定位Bug" class="headerlink" title="定位Bug"></a>定位Bug</h2><p>由于Wox算是一个好几年的项目了，所以日志还算比较完善，可以很方便地定位BUG。通过搜索<code>\wox \logs *.txt rc:today</code>就可以定位到今天生成的log文件。然后查看里面的log，就能知道bug是啥啦~</p>
+<h2 id="使用离线字典"><a href="#使用离线字典" class="headerlink" title="使用离线字典"></a>使用离线字典</h2><p>以前使用的有道字典在断网的时候没法使用，而且不支持模糊查词、联想查词、英文释义、近义词查询等功能。所以我一直想搞一个离线的字典来使用。</p>
+<p>首先找到了一个叫<code>easy dictionary</code>的插件，通过查看源代码可以知道，这个实际是把单词做成了一个大的json文件，并通过python读取json文件来实现的。测试下来发现这个字典库不是很全，也不是很方便使用。</p>
+<p>然后就找到了一个叫<code>Dictionary</code>的插件了，功能很齐全，是我理想中的字典的实现方式了。而且使用的离线字典是一个800M的数据库文件，非常给力。仓库地址为</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/harrynull/WoxDictionary">harrynull/WoxDictionary</a></p>
+<p><strong>安装方法</strong></p>
+<ol>
+<li><p>你需要先安装 <a target="_blank" rel="noopener" href="https://github.com/Wox-launcher/Wox">Wox</a>。</p>
+<p> You need to have <a target="_blank" rel="noopener" href="https://github.com/Wox-launcher/Wox">Wox</a> installed first.</p>
+</li>
+<li><p>(手动安装) 复制 dist 文件夹到 <code>C:\Users\\&#123;User Name&#125;\AppData\Local\Wox\app-&#123;Version Number&#125;\Plugins\</code></p>
+<p> (Manual Installation) Copy dist folder to <code>C:\Users\\&#123;User Name&#125;\AppData\Local\Wox\app-&#123;Version Number&#125;\Plugins\</code></p>
+<p> (WPM 安装) 在 Wox 中输入 <code>wpm install Dictionary</code>。</p>
+<p> (Wox Plugin Manager) Type <code>wpm install Dictionary</code> in your Wox.</p>
+</li>
+<li><p><strong>下载，解压，复制 <a target="_blank" rel="noopener" href="https://github.com/harrynull/WoxDictionary/releases/tag/dict">ecdict.db</a> 到 <code>C:\Users\用户名\AppData\Roaming\Wox\Plugins\Dictionary-随机串\dicts</code>。</strong></p>
+<p> <strong>Download, uncompress and copy <a target="_blank" rel="noopener" href="https://github.com/harrynull/WoxDictionary/releases/tag/dict">ecdict.db</a> to <code>C:\Users\&#123;your_user_name&#125;\AppData\Roaming\Wox\Plugins\Dictionary-&#123;random_characters&#125;\dicts</code></strong></p>
+</li>
+<li><p>设置API</p>
+</li>
+</ol>
+<h2 id="根据系统自带的软件选择默认打开软件"><a href="#根据系统自带的软件选择默认打开软件" class="headerlink" title="根据系统自带的软件选择默认打开软件"></a>根据系统自带的软件选择默认打开软件</h2><p>首先测试了C#中获取打开软件的路径，代码如下。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> System.Runtime.InteropServices;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">test_dll_call</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        [<span class="meta">DllImport(<span class="meta-string">&quot;shell32.dll&quot;</span>)</span>]</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">extern</span> <span class="built_in">int</span> <span class="title">FindExecutable</span>(<span class="params"><span class="built_in">string</span> lpFile, <span class="built_in">string</span> lpDirectory, [Out] StringBuilder lpResult</span>)</span>;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">var</span> result = <span class="keyword">new</span> StringBuilder(<span class="number">1000</span>);</span><br><span class="line">            FindExecutable(<span class="string">@&quot;D:\Documents\ZJU\课题组资料\施洪波\datasheet\T643 rev.1_ML91S.pdf&quot;</span>, <span class="literal">null</span>, result);</span><br><span class="line">            Console.WriteLine(result.ToString());</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仔细想了一下，好像不存在这个需求2333。因为搜索出来的结果就是可以用默认软件打开的，摔。</p>
+<h2 id="修改搜索框为圆角"><a href="#修改搜索框为圆角" class="headerlink" title="修改搜索框为圆角"></a>修改搜索框为圆角</h2><p>可以修改对应的主题的xaml文件来实现修改主题的目的。比如想要给搜索框增加圆角，就增加一句代码</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Setter Property=<span class="string">&quot;CornerRadius&quot;</span> Value=<span class="string">&quot;10&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
+<p>增加搜索框的阴影</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Setter Property=<span class="string">&quot;Window.Effect&quot;</span>&gt;</span><br><span class="line">    &lt;Setter.Value&gt;</span><br><span class="line">        &lt;DropShadowEffect Color=<span class="string">&quot;Black&quot;</span></span><br><span class="line">                          ShadowDepth=<span class="string">&quot;0&quot;</span></span><br><span class="line">                          BlurRadius=<span class="string">&quot;20&quot;</span>/&gt;</span><br><span class="line">    &lt;/Setter.Value&gt;</span><br><span class="line">&lt;/Setter&gt;</span><br></pre></td></tr></table></figure>
+<p>设置搜索框内的页边距</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Setter Property=<span class="string">&quot;Padding&quot;</span> Value=<span class="string">&quot;10&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
+<p>完整代码如下</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;ResourceDictionary xmlns=<span class="string">&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;</span></span><br><span class="line">                    xmlns:x=<span class="string">&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span></span><br><span class="line">                    xmlns:system=<span class="string">&quot;clr-namespace:System;assembly=mscorlib&quot;</span>&gt;</span><br><span class="line">    &lt;ResourceDictionary.MergedDictionaries&gt;</span><br><span class="line">        &lt;ResourceDictionary Source=<span class="string">&quot;Base.xaml&quot;</span>&gt;&lt;/ResourceDictionary&gt;</span><br><span class="line">    &lt;/ResourceDictionary.MergedDictionaries&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;Style x:Key=<span class="string">&quot;QueryBoxStyle&quot;</span> BasedOn=<span class="string">&quot;&#123;StaticResource BaseQueryBoxStyle&#125;&quot;</span> TargetType=<span class="string">&quot;&#123;x:Type TextBox&#125;&quot;</span>&gt;</span><br><span class="line">        &lt;Setter Property=<span class="string">&quot;Background&quot;</span> Value=<span class="string">&quot;#1f1d1f&quot;</span>/&gt;</span><br><span class="line">        &lt;Setter Property=<span class="string">&quot;Foreground&quot;</span> Value=<span class="string">&quot;#ffffff&quot;</span> /&gt;</span><br><span class="line">    &lt;/Style&gt;</span><br><span class="line">    &lt;Style x:Key=<span class="string">&quot;WindowBorderStyle&quot;</span> BasedOn=<span class="string">&quot;&#123;StaticResource BaseWindowBorderStyle&#125;&quot;</span> TargetType=<span class="string">&quot;&#123;x:Type Border&#125;&quot;</span>&gt;</span><br><span class="line">        &lt;Setter Property=<span class="string">&quot;Background&quot;</span> Value=<span class="string">&quot;#1f1d1f&quot;</span>&gt;&lt;/Setter&gt;</span><br><span class="line">        &lt;Setter Property=<span class="string">&quot;CornerRadius&quot;</span> Value=<span class="string">&quot;10&quot;</span>/&gt;</span><br><span class="line">        &lt;Setter Property=<span class="string">&quot;Margin&quot;</span> Value=<span class="string">&quot;20&quot;</span>/&gt;</span><br><span class="line">        &lt;Setter Property=<span class="string">&quot;Window.Effect&quot;</span>&gt;</span><br><span class="line">            &lt;Setter.Value&gt;</span><br><span class="line">                &lt;DropShadowEffect Color=<span class="string">&quot;Black&quot;</span></span><br><span class="line">                                  ShadowDepth=<span class="string">&quot;0&quot;</span></span><br><span class="line">                                  BlurRadius=<span class="string">&quot;20&quot;</span>/&gt;</span><br><span class="line">            &lt;/Setter.Value&gt;</span><br><span class="line">        &lt;/Setter&gt;</span><br><span class="line">    &lt;/Style&gt;</span><br><span class="line">    &lt;Style x:Key=<span class="string">&quot;WindowStyle&quot;</span> TargetType=<span class="string">&quot;&#123;x:Type Window&#125;&quot;</span> BasedOn=<span class="string">&quot;&#123;StaticResource BaseWindowStyle&#125;&quot;</span> &gt;</span><br><span class="line">        &lt;Setter Property=<span class="string">&quot;Background&quot;</span> Value=<span class="string">&quot;Transparent&quot;</span>/&gt;</span><br><span class="line">        </span><br><span class="line">    &lt;/Style&gt;</span><br><span class="line">    &lt;Style x:Key=<span class="string">&quot;PendingLineStyle&quot;</span> BasedOn=<span class="string">&quot;&#123;StaticResource BasePendingLineStyle&#125;&quot;</span> TargetType=<span class="string">&quot;&#123;x:Type Line&#125;&quot;</span> &gt;&lt;/Style&gt;</span><br><span class="line">    &lt;Style x:Key=<span class="string">&quot;ItemTitleStyle&quot;</span> BasedOn=<span class="string">&quot;&#123;StaticResource BaseItemTitleStyle&#125;&quot;</span> TargetType=<span class="string">&quot;&#123;x:Type TextBlock&#125;&quot;</span> &gt;</span><br><span class="line">        &lt;Setter Property=<span class="string">&quot;Foreground&quot;</span> Value=<span class="string">&quot;#f5f5f5&quot;</span>&gt;&lt;/Setter&gt;</span><br><span class="line">    &lt;/Style&gt;</span><br><span class="line">    &lt;Style x:Key=<span class="string">&quot;ItemSubTitleStyle&quot;</span> BasedOn=<span class="string">&quot;&#123;StaticResource BaseItemSubTitleStyle&#125;&quot;</span> TargetType=<span class="string">&quot;&#123;x:Type TextBlock&#125;&quot;</span> &gt;</span><br><span class="line">        &lt;Setter Property=<span class="string">&quot;Foreground&quot;</span>  Value=<span class="string">&quot;#c2c2c2&quot;</span>&gt;&lt;/Setter&gt;</span><br><span class="line">    &lt;/Style&gt;</span><br><span class="line">    &lt;Style x:Key=<span class="string">&quot;ItemTitleSelectedStyle&quot;</span> BasedOn=<span class="string">&quot;&#123;StaticResource BaseItemTitleSelectedStyle&#125;&quot;</span> TargetType=<span class="string">&quot;&#123;x:Type TextBlock&#125;&quot;</span>&gt;</span><br><span class="line">        &lt;Setter Property=<span class="string">&quot;Foreground&quot;</span> Value=<span class="string">&quot;#f5f5f5&quot;</span> /&gt;</span><br><span class="line">    &lt;/Style&gt;</span><br><span class="line">    &lt;Style x:Key=<span class="string">&quot;ItemSubTitleSelectedStyle&quot;</span> BasedOn=<span class="string">&quot;&#123;StaticResource BaseItemSubTitleSelectedStyle&#125;&quot;</span> TargetType=<span class="string">&quot;&#123;x:Type TextBlock&#125;&quot;</span>&gt;</span><br><span class="line">        &lt;Setter Property=<span class="string">&quot;Foreground&quot;</span> Value=<span class="string">&quot;#c2c2c2&quot;</span> /&gt;</span><br><span class="line">    &lt;/Style&gt;</span><br><span class="line">    &lt;SolidColorBrush x:Key=<span class="string">&quot;ItemSelectedBackgroundColor&quot;</span>&gt;<span class="meta">#4F6180&lt;/SolidColorBrush&gt;</span></span><br><span class="line">    &lt;Style x:Key=<span class="string">&quot;ThumbStyle&quot;</span> BasedOn=<span class="string">&quot;&#123;StaticResource BaseThumbStyle&#125;&quot;</span> TargetType=<span class="string">&quot;&#123;x:Type Thumb&#125;&quot;</span>&gt;&lt;/Style&gt;</span><br><span class="line">    &lt;Style x:Key=<span class="string">&quot;ScrollBarStyle&quot;</span> BasedOn=<span class="string">&quot;&#123;StaticResource BaseScrollBarStyle&#125;&quot;</span> TargetType=<span class="string">&quot;&#123;x:Type ScrollBar&#125;&quot;</span>&gt;&lt;/Style&gt;</span><br><span class="line">&lt;/ResourceDictionary&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/Wox-launcher/Wox/issues/208">themes: Add ability to change bg form #208</a></li>
+</ol>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2021/02/15/CrossTalk/" data-toggle="tooltip" data-placement="top" title="串扰">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="#" target="_blank">Bar</a></li>
+                    
+                        <li><a href="#" target="_blank">Example Friends</a></li>
+                    
+                        <li><a href="#" target="_blank">It helps SEO</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/li-bai-25-10">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/QY7">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Felix&#39;s Blog 2021 
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://felixqi.top/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-49627206-1';
+    var _gaDomain = 'huangxuan.me';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '4cc1f2d8f3067386cc5cdb626a202900';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://felixqi.top/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
