@@ -96,14 +96,14 @@
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
@@ -198,10 +198,10 @@
 
                 <h1 id="Wox-DIY"><a href="#Wox-DIY" class="headerlink" title="Wox DIY"></a>Wox DIY</h1><p>Wox是一个开源的软件，这个项目是一个学习项目的过程，通过修改Wox，自定义其功能，并在这个过程中学习Windows软件的开发过程。</p>
 <h2 id="源代码编译并且release"><a href="#源代码编译并且release" class="headerlink" title="源代码编译并且release"></a>源代码编译并且release</h2><p>先把Wox的代码clone下来，用VisualStudio打开。由于Wox使用的.Net版本是4.6.2以上的，需要打开的时候下载对应版本的.net库文件然后安装。然后就可以在Visual Studio里面查看代码了。通过这里选择编译的结果是<strong>release</strong>还是<strong>debug</strong>，选好之后点击<strong>Build→build solution。</strong>生成的文件在对应的项目文件夹下的<code>Output/Debug</code>或者<code>Output/Release</code>下面。</p>
-<p><img src="/.top//Untitled.png"></p>
+<p><img src="/images/Wox%20DIY%20a3a80f98ef2340cc90dc5ff63cfef1de/Untitled.png"></p>
 <p>由于这个build是针对C#文件进行编译的，python文件肯定不会编译。而如果想要Wox软件支持Python的扩展，还需要把源项目下的<code>JsonRPC</code>文件夹拷贝到软件根目录。最好把<code>runtime、Languages</code>这些文件夹也一并拷贝了。</p>
 <h2 id="修改命中文字的颜色"><a href="#修改命中文字的颜色" class="headerlink" title="修改命中文字的颜色"></a>修改命中文字的颜色</h2><p>默认的命中的文字颜色是灰色的，而且软件内部不支持颜色的修改。强迫症的我想要实现下面图中的效果。</p>
-<p><img src="/.top//Untitled%201.png"></p>
+<p><img src="/images/Wox%20DIY%20a3a80f98ef2340cc90dc5ff63cfef1de/Untitled%201.png"></p>
 <p>修改很简单，找到<code>base.xaml</code>，这个文件是所有的显示主题的基础。可以看到选中的颜色都是灰色</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;SolidColorBrush x:Key=<span class="string">&quot;BaseItemHighlightColor&quot;</span> Color=<span class="string">&quot;LightGray&quot;</span>/&gt;</span><br><span class="line">&lt;SolidColorBrush x:Key=<span class="string">&quot;BaseItemSelectedHighlightColor&quot;</span> Color=<span class="string">&quot;LightGray&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
 <p>这里想把文字改成橘黄色，所以修改其中代码把颜色改为<code>#ff9800</code>。</p>
